@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #define START_LOW 97
 #define END_LOW 122
 
@@ -58,14 +56,3 @@ void ft_strcapitalize(char *str) {
   }
   str[pos] = '\0'; 
 }
-
-int main() {
-  char str[] = "salut, comment tu vas ? 42mots quarante-deux; cinquante+et+un";
-
-  ft_strcapitalize(str);
-
-  printf("%s\n", str);
-
-  return 0;
-}
-

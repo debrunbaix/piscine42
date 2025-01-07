@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #define START_LOW 97
 #define END_LOW 122
 
@@ -16,12 +14,4 @@ char *ft_strupcase(char *str){
   }
 
   return str;
-}
-
-int main(){
-  char str[] = "24__Hello";
-
-  ft_strupcase(str);
-
-  printf("%s\n", str);
 }

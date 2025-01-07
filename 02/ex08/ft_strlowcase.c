@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #define START_UP 65
 #define END_UP 90
 
@@ -16,12 +14,4 @@ char *ft_strlowcase(char *str){
   }
 
   return str;
-}
-
-int main(){
-  char str[] = "24__Hello";
-
-  ft_strlowcase(str);
-
-  printf("%s\n", str);
 }
