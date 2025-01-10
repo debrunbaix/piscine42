@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdio.h>
 
 #define N_PRINTABLE_LOW 0
 #define N_PRINTABLE_TOP 31
@@ -8,19 +7,52 @@ void ft_putchar(char c){
   write(1, &c, 1);
 }
 
+void ft_put_hex(char c){
+  char *hex_digit = "0123456789abcdef";
+
+  ft_putchar(hex_digit[c / 16]);
+  ft_putchar(hex_digit[c % 16]);
+}
+
 unsigned int ft_sizeof(char *src){
   int i;
   for (i = 0; src[i] != '\0'; i++);
   return i;
 }
 
-void ft_print_line(char *str){
+void ft_print_addr_text(char *str){
+  unsigned long addr = (unsigned long)str; 
+  unsigned char byte;
+  int i;
+
+  for (i = (sizeof(addr) * 2) - 1; i >= 0; i--) {
+      byte = (addr >> (i * 4)) & 0xF; 
+      ft_put_hex(byte);              
+  }
+
+  ft_putchar(':'); 
+  ft_putchar(' ');
+}
+
+void ft_print_hex_text(char *str, int size){
+  int i = 0;
+  while (i < 16) {
+    ft_put_hex(str[i]);
+    if (i % 2){
+      ft_putchar(' ');
+    }
+    i++;
+  }
+  ft_putchar(':');
+  ft_putchar(' ');
+}
+
+void ft_print_clear_text(char *str, int size){
   int j = 0;
 
   while (j < 16) {
-    if(str[j] <= N_PRINTABLE_TOP) {
+    if (str[j] <= N_PRINTABLE_TOP) {
       ft_putchar('.');
-      printf("!!");
     } else {
       ft_putchar(str[j]);
     }
@@ -35,23 +67,21 @@ void *ft_print_memory(void *addr, unsigned int size) {
   unsigned int i = 0, j = 0;
   
   for (i = 0; i < lines; i++){
-    /* printf("%p: ", addr+16*i); */
-    ft_print_line(ptr);
+    ft_print_addr_text(ptr);
+    ft_print_hex_text(ptr, 16);
+    ft_print_clear_text(ptr, 16);
     ptr += 16;
-    printf("\n");
+    ft_putchar('\n');
   }
 
   if (rest){
-    while (j < rest) {
-      printf("%c", ptr[j]);
-      j++;
-    }
-    printf("\n");
+    ft_print_addr_text(ptr);
+    ft_print_hex_text(ptr, rest);
+    ft_print_clear_text(ptr, rest);
+    ft_putchar('\n');
   }
-
   return addr;
 }
-
 
 int main(void)
 {
@@ -62,4 +92,3 @@ int main(void)
 
   return 0;
 }
-
